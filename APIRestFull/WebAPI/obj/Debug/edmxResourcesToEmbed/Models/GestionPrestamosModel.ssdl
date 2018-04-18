@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="dbGestionDePrestamosModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Clientes">
+    <Key>
+      <PropertyRef Name="Documento" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Documento" Type="int" Nullable="false" />
+    <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Apellidos" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="FechaNacimiento" Type="datetime" Nullable="false" />
+    <Property Name="FechaRegistro" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SolicitudyAprobacion">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IdCliente" Type="int" Nullable="false" />
+    <Property Name="FechaIngresoEmpresa" Type="datetime" Nullable="false" />
+    <Property Name="SalarioMensual" Type="int" Nullable="false" />
+    <Property Name="NombreEmpresa" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="NitEmpresa" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="CreditoAprobado" Type="bit" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_SolicitudyAprobacion_SolicitudyAprobacion">
+    <End Role="SolicitudyAprobacion" Type="Self.SolicitudyAprobacion" Multiplicity="1" />
+    <End Role="SolicitudyAprobacion1" Type="Self.SolicitudyAprobacion" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="SolicitudyAprobacion">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SolicitudyAprobacion1">
+        <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="dbGestionDePrestamosModelStoreContainer">
+    <EntitySet Name="Clientes" EntityType="Self.Clientes" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SolicitudyAprobacion" EntityType="Self.SolicitudyAprobacion" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_SolicitudyAprobacion_SolicitudyAprobacion" Association="Self.FK_SolicitudyAprobacion_SolicitudyAprobacion">
+      <End Role="SolicitudyAprobacion" EntitySet="SolicitudyAprobacion" />
+      <End Role="SolicitudyAprobacion1" EntitySet="SolicitudyAprobacion" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
