@@ -19,17 +19,17 @@ app.use(function (req, res, next) {
 });
 
 //Setting up server
- var server = app.listen(process.env.PORT || 8080, function () {
+ var server = app.listen(process.env.PORT || 3001, function () {
     var port = server.address().port;
     console.log("App now running on port", port);
  });
 
 //Initiallising connection string
 var dbConfig = {
-    user:  "<dbUserName>",
-    password: "<dbPassword>",
-    server: "<dbHost_URL>",
-    database: "<dbName>"
+    user:  'kaysinho',
+    password: '14122009',
+    server: 'localhost\\SQLSERVER',
+    database: 'dbGestionDePrestamos'
 };
 
 //Function to connect to database and execute query
@@ -57,14 +57,14 @@ var  executeQuery = function(res, query){
 }
 
 //GET API
-app.get("/api/user", function(req , res){
-                var query = "select * from [user]";
+app.get("/api/clients", function(req , res){
+                var query = "SELECT * FROM [Clientes]";
                 executeQuery (res, query);
 });
 
-//POST API
+/*//POST API
  app.post("/api/user", function(req , res){
-                var query = "INSERT INTO [user] (Name,Email,Password) VALUES (req.body.Name,req.body.Email,req.body.Password”);
+                var query = "INSERT INTO [user] (Name,Email,Password) VALUES (req.body.Name,req.body.Email,req.body.Password";
                 executeQuery (res, query);
 });
 
@@ -78,4 +78,4 @@ app.get("/api/user", function(req , res){
  app.delete("/api/user /:id", function(req , res){
                 var query = "DELETE FROM [user] WHERE Id=" + req.params.id;
                 executeQuery (res, query);
-});
+});*/
