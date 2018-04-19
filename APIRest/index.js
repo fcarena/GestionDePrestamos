@@ -26,12 +26,12 @@ app.use(function (req, res, next) {
 
 //Initiallising connection string
 var dbConfig = {
-    user:  'kaysinho',
+    user:  'sa',
     password: '14122009',
-    server: 'localhost\\SQLSERVER',
+    server: 'localhost\\DEVELOPER',
     database: 'dbGestionDePrestamos'
 };
-
+ 
 //Function to connect to database and execute query
 var  executeQuery = function(res, query){             
      sql.connect(dbConfig, function (err) {
@@ -43,13 +43,13 @@ var  executeQuery = function(res, query){
                          // create Request object
                          var request = new sql.Request();
                          // query to the database
-                         request.query(query, function (err, res) {
+                         request.query(query, function (err, recordset) {
                            if (err) {
                                       console.log("Error while querying database :- " + err);
                                       res.send(err);
                                      }
                                      else {
-                                       res.send(res);
+                                       res.send(recordset);
                                             }
                                });
                        }
@@ -62,12 +62,15 @@ app.get("/api/clients", function(req , res){
                 executeQuery (res, query);
 });
 
-/*//POST API
+//POST API
  app.post("/api/user", function(req , res){
-                var query = "INSERT INTO [user] (Name,Email,Password) VALUES (req.body.Name,req.body.Email,req.body.Password";
+                var query = `IINSERT INTO [dbo].[Clientes] (Documento ,Nombre ,Apellidos ,FechaNacimiento ,FechaRegistro)
+                            VALUES 
+                            (req.body.Documento,req.body.Nombre,req.body.Apellidos, req.body.FechaNacimiento, req.body.FechaRegistro, `;
                 executeQuery (res, query);
 });
 
+/*
 //PUT API
  app.put("/api/user/:id", function(req , res){
                 var query = "UPDATE [user] SET Name= " + req.body.Name  +  " , Email=  " + req.body.Email + "  WHERE Id= " + req.params.id;
