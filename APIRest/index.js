@@ -25,10 +25,17 @@ app.use(function (req, res, next) {
  });
 
 //Initiallising connection string
-var dbConfig = {
+/*var dbConfig = {
     user:  'sa',
     password: '14122009',
     server: 'localhost\\DEVELOPER',
+    database: 'dbGestionDePrestamos'
+};*/
+
+var dbConfig = {
+    user:  'kaysinho',
+    password: '14122009',
+    server: 'localhost\\SQLSERVER',
     database: 'dbGestionDePrestamos'
 };
  
@@ -57,16 +64,18 @@ var  executeQuery = function(res, query){
 }
 
 //GET API
-app.get("/api/clients", function(req , res){
+app.get("/api/v1/clients", function(req , res){
                 var query = "SELECT * FROM [Clientes]";
                 executeQuery (res, query);
 });
 
 //POST API
- app.post("/api/user", function(req , res){
-                var query = `IINSERT INTO [dbo].[Clientes] (Documento ,Nombre ,Apellidos ,FechaNacimiento ,FechaRegistro)
-                            VALUES 
-                            (req.body.Documento,req.body.Nombre,req.body.Apellidos, req.body.FechaNacimiento, req.body.FechaRegistro, `;
+ app.post("/api/v1/clients", function(req , res){
+                console.log(req.body);
+                var query = `INSERT INTO [Clientes] 
+                            (Documento, Nombre, Apellidos, FechaNacimiento, FechaRegistro)
+                             VALUES 
+                             ('${req.body.Document}', '${req.body.Name}', '${req.body.LastName}', '${req.body.BirthDate}', '${req.body.BirthDate}')`;
                 executeQuery (res, query);
 });
 

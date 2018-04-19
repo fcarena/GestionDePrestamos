@@ -3,5 +3,5 @@ export interface Client{
     Document:number,
     Name:string,
     LastName:string,
-    BitrhDate:Date
+    BirthDate:Date
 }
