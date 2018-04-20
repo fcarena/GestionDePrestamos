@@ -1,1 +1,10 @@
-/* You can add global styles to this file, and also import other style files */
+
+
+.ngx-datepicker-container[_ngcontent-c1] .ngx-datepicker-input[_ngcontent-c1] {
+    font-family: 'Roboto', sans-serif !important;
+    font-size: 16px !important;
+    font-weight: 300 !important;
+    padding: 0 20px !important;
+    border: 1px solid #ddd !important;
+    width: 100% !important;
+}

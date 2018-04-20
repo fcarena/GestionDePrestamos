@@ -1,13 +1,13 @@
 'use strict'
 
 //Initiallising node modules
-var express = require("express");
-var bodyParser = require("body-parser");
-var sql = require("mssql");
-var app = express(); 
+const express = require("express");
+const bodyParser = require("body-parser");
+const sql = require("mssql");
+const app = express();
 
 // Body Parser Middleware
-app.use(bodyParser.json()); 
+app.use(bodyParser.json());
 
 //CORS Middleware
 app.use(function (req, res, next) {
@@ -19,75 +19,118 @@ app.use(function (req, res, next) {
 });
 
 //Setting up server
- var server = app.listen(process.env.PORT || 3001, function () {
+const server = app.listen(process.env.PORT || 3001, function () {
     var port = server.address().port;
     console.log("App now running on port", port);
- });
+});
 
 //Initiallising connection string
-/*var dbConfig = {
-    user:  'sa',
+const dbConfig = {
+    user: 'sa',
     password: '14122009',
     server: 'localhost\\DEVELOPER',
     database: 'dbGestionDePrestamos'
-};*/
-
+};
+/*
 var dbConfig = {
     user:  'kaysinho',
     password: '14122009',
     server: 'localhost\\SQLSERVER',
     database: 'dbGestionDePrestamos'
-};
- 
-//Function to connect to database and execute query
-var  executeQuery = function(res, query){             
-     sql.connect(dbConfig, function (err) {
-         if (err) {   
-                     console.log("Error while connecting database :- " + err);
-                     res.send(err);
-                  }
-                  else {
-                         // create Request object
-                         var request = new sql.Request();
-                         // query to the database
-                         request.query(query, function (err, recordset) {
-                           if (err) {
-                                      console.log("Error while querying database :- " + err);
-                                      res.send(err);
-                                     }
-                                     else {
-                                       res.send(recordset);
-                                            }
-                               });
-                       }
-      });           
+};*/
+
+const resp = {
+    status: '',
+    message:''
 }
 
-//GET API
-app.get("/api/v1/clients", function(req , res){
-                var query = "SELECT * FROM [Clientes]";
-                executeQuery (res, query);
+/*--------Conecta a la Base de datos y ejecuta una Query */
+var executeQuery = function (res, query) {
+    sql.connect(dbConfig, function (err) {
+        if (err) {
+            console.log("Error while connecting database :- " + err);
+            res.send(err);
+        }
+        else {
+            var request = new sql.Request();
+            request.query(query, function (err, result) {
+                if (err) {
+                    console.log("Error while querying database :- " + err);
+                    res.send(err);
+                }
+                else {
+                    
+                    res.send(result);
+                }
+            });
+        }
+    });
+}
+
+var executeTransaction = function (res, query) {
+    sql.connect(dbConfig, function (err) {
+        if (err) {
+            console.log("Error while connecting database :- " + err);
+            resp.status = "error"
+                            resp.message = "Error while connecting database :- " + err
+                            res.send(resp)
+        }
+        else {
+            var transaction = new sql.Transaction()
+            transaction.begin(err => {
+                if (err){
+                    resp.status = "error"
+                            resp.message = err
+                            res.send(resp)
+                }
+             
+                const request = new sql.Request(transaction)
+                request.query(query, (err, result) => {
+                    if (err){
+                        resp.status = "error"
+                            resp.message = err
+                            res.send(resp)
+                    }
+             
+                    transaction.commit(err => {
+                        if (err){
+                            resp.status = "error"
+                            resp.message = err
+                            res.send(resp)
+                        }
+                        resp.status = "success"
+                        resp.message = "client added"
+                        res.send(resp)
+                    })
+                })
+            })
+        }
+    });
+}
+
+
+/*------GET Clients------*/
+app.get("/api/v1/clients", function (req, res) {
+    var query = "SELECT * FROM [Clientes]";
+    executeQuery(res, query);
 });
 
-//POST API
- app.post("/api/v1/clients", function(req , res){
-                console.log(req.body);
-                var query = `INSERT INTO [Clientes] 
-                            (Documento, Nombre, Apellidos, FechaNacimiento, FechaRegistro)
-                             VALUES 
-                             ('${req.body.Document}', '${req.body.Name}', '${req.body.LastName}', '${req.body.BirthDate}', '${req.body.BirthDate}')`;
-                executeQuery (res, query);
+/*------GET Client------*/
+app.get("/api/v1/clients/:document", function (req, res) {
+    let document = req.params.document;
+    var query = `SELECT * FROM [Clientes] WHERE Documento='${document}'`;
+    executeQuery(res, query);
 });
 
-/*
-//PUT API
- app.put("/api/user/:id", function(req , res){
-                var query = "UPDATE [user] SET Name= " + req.body.Name  +  " , Email=  " + req.body.Email + "  WHERE Id= " + req.params.id;
-                executeQuery (res, query);
+/*------POST Client----- */
+app.post("/api/v1/clients", function (req, res) {
+
+    var query = `INSERT INTO [Clientes] 
+                                (Documento, Nombre, Apellidos, FechaNacimiento, FechaRegistro)
+                                 VALUES 
+                                 ('${req.body.Document}', '${req.body.Name}', '${req.body.LastName}', '${req.body.BirthDate}', GETDATE())`;
+
+    //executeQuery(res, query);
+    executeTransaction(res, query)
 });
 
-// DELETE API
- app.delete("/api/user /:id", function(req , res){
-                var query = "DELETE FROM [user] WHERE Id=" + req.params.id;
-                executeQuery (res, query);
-});*/
