@@ -6,7 +6,7 @@ Aplicacion en la que un cliente se registra en una base de datos con su informac
 
 ### Base de datos
 Se requiere de SQL Server, y ejecutar el script.sql, que creará un par de tablas y una base de datos.
-Para que el API Rest funcione bien, debe dirigirse al menu de windows, buscar Sql Server Configuration Manager, luego ur a configuracion de Red de SQL Server, paso seguido buscar la opcion Protocolos 'nombre instancia', y al dar click, certificar que TCP/IP esta habilitado, si no es asi habilitarlo y reiniciar el equipo.
+Para que el API Rest funcione bien, debe dirigirse al menu de windows, buscar Sql Server Configuration Manager, luego ir a configuracion de Red de SQL Server, paso seguido buscar la opcion Protocolos 'nombre instancia', y al dar click, certificar que TCP/IP esta habilitado, si no es asi habilitarlo y reiniciar el equipo.
 
 ### API Rest
 Fue desarrollada en Node.js, por lo que es indispensable ir a la pagina del fabricante y descargar la ultima version funcional. 
@@ -17,4 +17,4 @@ Una forma de probar el correcto funcionamiento es abrir en su brouser la siguien
 ### App en Angular
 Este proyecto fue generado con [Angular CLI](https://github.com/angular/angular-cli) version 1.7.0. por lo que es indispensable tenerlo isntalado en su maquina.
 Paso siguiente, abrir la carpeta \GestionDePrestamos\WebApp y navegar hasta esa ruta desde su terminal, y descargar todos los paquetes de node con npm install.
-Luego ejecutar `ng serve` y navegarhasta `http://localhost:4200/`. 
+Luego ejecutar `ng serve` y navegarhasta http://localhost:4200/. 
