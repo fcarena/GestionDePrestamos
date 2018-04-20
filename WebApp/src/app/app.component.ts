@@ -7,4 +7,12 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'app';
+
+  getClassActive(route): string {
+    if (String(window.location.href).indexOf(route) >= 0) {
+      return "active"
+    }
+  }
+  
+
 }

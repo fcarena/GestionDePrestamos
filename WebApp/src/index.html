@@ -1,38 +1,40 @@
 <!doctype html>
 <html lang="en">
+
 <head>
-  <meta charset="utf-8">
+    <meta charset="utf-8">
 
-  <base href="/">
+    <base href="/">
 
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Gestión de Prestamos</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Gestión de Prestamos</title>
 
-        <!-- CSS -->
-        <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
-        <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-        <link rel="stylesheet" href="assets/font-awesome/css/font-awesome.min.css">
-		<link rel="stylesheet" href="assets/css/form-elements.css">
-        <link rel="stylesheet" href="assets/css/style.css">
+    <!-- CSS -->
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/css/form-elements.css">
+    <link rel="stylesheet" href="assets/css/style.css">
 
-        <!-- Favicon and touch icons -->
-        <link rel="shortcut icon" href="assets/ico/favicon.png">
+    <!-- Favicon and touch icons -->
+    <link rel="shortcut icon" href="assets/ico/favicon.png">
 
 </head>
+
 <body>
-  <app-root></app-root>
-  <!-- Javascript -->
-  <script src="assets/js/jquery-1.11.1.min.js"></script>
-  <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-  <script src="assets/js/jquery.backstretch.min.js"></script>
-  <script src="assets/js/retina-1.1.0.min.js"></script>
-  <script src="assets/js/scripts.js"></script>
-  <script>
-    function soloNumeros(e) {
+    <app-root></app-root>
+    <!-- Javascript -->
+    <script src="assets/js/jquery-1.11.1.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/js/jquery.backstretch.min.js"></script>
+    <script src="assets/js/retina-1.1.0.min.js"></script>
+    <script src="assets/js/scripts.js"></script>
+    <script>
+        function soloNumeros(e) {
             key = e.keyCode || e.which;
             tecla = String.fromCharCode(key).toLowerCase();
             letras = "0123456789";
-            especiales = ["8","37","39","46"];
+            especiales = ["8", "37", "39", "46"];
 
             tecla_especial = false
             for (var i in especiales) {
@@ -51,7 +53,7 @@
             key = e.keyCode || e.which;
             tecla = String.fromCharCode(key).toLowerCase();
             letras = " áàâãéêéíóôõúabcçdefghijklmnñopqrstuvwxyz";
-            especiales = ["8","37","39","46"];
+            especiales = ["8", "37", "39", "46"];
 
             tecla_especial = false
             for (var i in especiales) {
@@ -65,6 +67,26 @@
                 return false;
             }
         }
-  </script>
+
+        function soloNumerosyCaracteres(e) {
+            key = e.keyCode || e.which;
+            tecla = String.fromCharCode(key).toLowerCase();
+            letras = "0123456789-";
+            especiales = ["8", "37", "39", "46"];
+
+            tecla_especial = false
+            for (var i in especiales) {
+                if (key == especiales[i]) {
+                    tecla_especial = true;
+                    break;
+                }
+            }
+
+            if (letras.indexOf(tecla) == -1 && !tecla_especial) {
+                return false;
+            }
+        }
+    </script>
 </body>
+
 </html>

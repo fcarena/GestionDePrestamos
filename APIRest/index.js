@@ -31,13 +31,6 @@ const dbConfig = {
     server: 'localhost\\DEVELOPER',
     database: 'dbGestionDePrestamos'
 };
-/*
-var dbConfig = {
-    user:  'kaysinho',
-    password: '14122009',
-    server: 'localhost\\SQLSERVER',
-    database: 'dbGestionDePrestamos'
-};*/
 
 const resp = {
     status: '',
@@ -129,6 +122,32 @@ app.post("/api/v1/clients", function (req, res) {
                                 (Documento, Nombre, Apellidos, FechaNacimiento, FechaRegistro)
                                  VALUES 
                                  ('${req.body.Document}', '${req.body.Name}', '${req.body.LastName}', '${req.body.BirthDate}', GETDATE())`;
+
+    //executeQuery(res, query);
+    executeTransaction(res, query)
+});
+
+
+/*------GET Aproval------*/
+app.get("/api/v1/aproval", function (req, res) {
+    var query = "SELECT * FROM [SolicitudyAprobacion]";
+    executeQuery(res, query);
+});
+
+/*------GET Aproval------*/
+app.get("/api/v1/aproval/:id", function (req, res) {
+    let id = req.params.id;
+    var query = `SELECT * FROM [SolicitudyAprobacion] WHERE IdCliente='${id}'`;
+    executeQuery(res, query);
+});
+
+/*------POST Aproval----- */
+app.post("/api/v1/aproval", function (req, res) {
+
+    var query = `INSERT INTO [SolicitudyAprobacion] 
+                                (IdCliente,FechaIngresoEmpresa,SalarioMensual,NombreEmpresa,NitEmpresa,CreditoAprobado)
+                                 VALUES 
+                                 ('${req.body.IdClient}', '${req.body.AdmissionDate}', '${req.body.Salary}', '${req.body.NameCompany}', '${req.body.NitCompany}', '${req.body.CreditAproval}')`;
 
     //executeQuery(res, query);
     executeTransaction(res, query)

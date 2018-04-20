@@ -86,22 +86,22 @@ export class ClientRegisterComponent implements OnInit {
     return edad;
   }
 
+
   clientRegister() {
 
     if (this.validateRegister()) {
       this.loading = true
-      let exitsDocument: boolean = false
       this._clientService.getClient(this.client.Document).subscribe(clients => {
         if (clients.length > 0) {
           alert("Este documento ya existe como cliente registrado, por favor cambielo")
           this.loading = false
         } else {
           this._clientService.addClient(this.client).subscribe(clients => {
-            if (clients["state"]=="success"){
+            if (clients["status"]=="success"){
               alert("Ha sido registrado, ahora procederemos con los datos de su empleo")
-              this.cleanForm();
               this.loading = false
-              this.router.navigate(['company-data'])
+              this.router.navigate(['company-data', this.client.Document])
+              this.cleanForm();
             }else{
               alert(clients["message"])
             }

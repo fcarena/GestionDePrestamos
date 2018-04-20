@@ -3,5 +3,6 @@ export interface ClientCompany{
     NameCompany:string,
     NitCompany:string,
     Salary:number,
-    AdmissionDate:Date
+    AdmissionDate:Date,
+    CreditAproval:number
 }

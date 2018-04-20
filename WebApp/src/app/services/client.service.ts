@@ -21,13 +21,11 @@ export class ClientService {
     })
   }
 
-//  getClient(clientDocument: number):Observable<Client[]> {
   getClient(clientDocument: number):Observable<any> {
     
     return this._http.get(this.API+`/${clientDocument}`, { headers: this.headers }).map( resp =>{
       console.log(resp);
       return resp;
     })
-    //.map(result=>result[])
   }
 }

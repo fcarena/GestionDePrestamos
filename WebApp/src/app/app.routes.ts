@@ -6,8 +6,8 @@ import { SuccessCreditComponent } from './components/success-credit/success-cred
 
 const AppRouteModule: Routes = [
     { path: 'register', component: ClientRegisterComponent },
-    { path: 'company-data', component: WorkDataComponent },
-    { path: 'success', component: SuccessCreditComponent },
+    { path: 'company-data/:id', component: WorkDataComponent },
+    { path: 'success/:credit', component: SuccessCreditComponent },
     { path: '**', pathMatch: 'full', redirectTo:'register' }
 ];
 
